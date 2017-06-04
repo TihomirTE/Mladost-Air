@@ -1,6 +1,6 @@
 ﻿namespace MladostAir.Models.Enum
 {
-    public enum ClassOfTravel
+    public enum TypeClass
     {
         First = 1,
         Bussiness = 2,
