@@ -1,0 +1,18 @@
+{
+    "data": [{
+
+        "ticketNumber": 4321,
+        "typeClass": "first",
+        "typeAircraft": "Airbus319",
+        "customer": {
+            "firstName": "Evstati",
+            "lastName": "Stamatov",
+            "customerNumber": 765,
+            "age": 21
+        },
+        "airline": "FranceAir",
+        "airport": "LBBG",
+        "city": "Burgas",
+        "country": "Bulgaria"
+    }]
+}
