@@ -5,7 +5,12 @@ namespace MladostAir.Models
 {
     public class Country
     {
-        private ICollection<Airport> airports;
+        private ICollection<City> cities;
+
+        public Country()
+        {
+            this.cities = new HashSet<City>();
+        }
 
         public int Id { get; set; }
 
@@ -13,10 +18,11 @@ namespace MladostAir.Models
         [MaxLength(20)]
         public string Name { get; set; }
 
-        public virtual ICollection<Airport> Airports
+
+        public virtual ICollection<City> Cities
         {
-            get { return this.airports; }
-            set { this.airports = value; }
+            get { return this.cities; }
+            set { this.cities = value; }
         }
     }
 }

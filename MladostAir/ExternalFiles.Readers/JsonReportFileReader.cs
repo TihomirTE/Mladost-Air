@@ -8,15 +8,15 @@ namespace ExternalFiles.Readers
 {
     public class JsonReportFileReader
     {
-        private const string JsonDirectory = "../../../../ExternalFiles/JsonReports/airline.json";
+        private const string JsonDirectory = "../../../../ExternalFiles/JsonReports/dataJson.json";
 
         public string ReadJsonReports()
         {
-            //    var filesPath = Directory.GetFiles(JsonDirectory);
+            //var filesPath = Directory.GetFiles(JsonDirectory);
 
-            //    var jsonTexts = filesPath.Select(path => File.ReadAllText(path));
+            //var jsonTexts = filesPath.Select(path => File.ReadAllText(path));
 
-            //    return jsonTexts;
+            //return jsonTexts;
 
             StreamReader file = File.OpenText(JsonDirectory);
             JsonTextReader reader = new JsonTextReader(file);

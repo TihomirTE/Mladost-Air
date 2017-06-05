@@ -19,7 +19,7 @@ namespace MladostAir.Data
 
         public virtual IDbSet<Customer> Customers { get; set; }
 
-        public virtual IDbSet<Destination> Destinations { get; set; }
+        public virtual IDbSet<City> Cities { get; set; }
 
         public virtual IDbSet<Ticket> Tickets { get; set; }
     }

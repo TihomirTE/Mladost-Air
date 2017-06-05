@@ -6,8 +6,13 @@ namespace MladostAir.Models
     public class Customer
     {
         private ICollection<Ticket> tickets;
-
         private ICollection<Airline> airlines;
+
+        public Customer()
+        {
+            this.tickets = new HashSet<Ticket>();
+            this.airlines = new HashSet<Airline>();
+        }
 
         public int Id { get; set; }
 

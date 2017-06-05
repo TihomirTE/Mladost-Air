@@ -5,7 +5,12 @@ namespace MladostAir.Models
 {
     public class Airport
     {
-        private ICollection<Airline> airlines;
+        private ICollection<Ticket> tickets;
+
+        public Airport()
+        {
+            this.tickets = new HashSet<Ticket>();
+        }
 
         public int Id { get; set; }
 
@@ -17,14 +22,14 @@ namespace MladostAir.Models
         [MaxLength(5)]
         public string AirportCode { get; set; }
 
-        public int CountryId { get; set; }
+        public int CityId { get; set; }
 
-        public virtual Country Country { get; set; }
+        public virtual City City { get; set; }
 
-        public virtual ICollection<Airline> Airlines
+        public virtual ICollection<Ticket> Tickets
         {
-            get { return this.airlines; }
-            set { this.airlines = value; }
+            get { return this.tickets; }
+            set { this.tickets = value; }
         }
     }
 }

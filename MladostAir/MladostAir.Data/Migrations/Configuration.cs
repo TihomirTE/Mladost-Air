@@ -17,59 +17,59 @@ namespace MladostAir.Data.Migrations
         // set initial data
         protected override void Seed(MladostAirDbContext context)
         {
-            //context.Destinations
-            //   .AddOrUpdate(
-            //   d => d.Name,
-            //   new Destination
-            //   {
-            //       Name = "Sofia"
-            //   });
+            context.Cities
+               .AddOrUpdate(
+               d => d.Name,
+               new City
+               {
+                   Name = "Sofia"
+               });
 
-            //context.Countries
-            //   .AddOrUpdate(
-            //   d => d.Name,
-            //   new Country
-            //   {
-            //       Name = "Bulgaria"
-            //   });
+            context.Countries
+               .AddOrUpdate(
+               d => d.Name,
+               new Country
+               {
+                   Name = "Bulgaria"
+               });
 
-            //context.Airports
-            //  .AddOrUpdate(
-            //  d => d.Name,
-            //  new Airport
-            //  {
-            //      Name = "Sofia",
-            //      AirportCode = "LBSF"
-            //  });
+            context.Airports
+              .AddOrUpdate(
+              d => d.Name,
+              new Airport
+              {
+                  Name = "Sofia",
+                  AirportCode = "LBSF"
+              });
 
-            //context.Airlines
-            // .AddOrUpdate(
-            // d => d.Name,
-            // new Airline
-            // {
-            //     Name = "BulgariaAir",
-            //     TypeAircraft = TypeAircraft.Airbus319
-            // });
+            context.Airlines
+             .AddOrUpdate(
+             d => d.Name,
+             new Airline
+             {
+                 Name = "Bulgar"
+             });
 
-            //context.Customers
-            //    .AddOrUpdate(
-            //    c => c.FirstName,
-            //    new Customer
-            //    {
-            //        FirstName = "Pesho",
-            //        LastName = "Peshev",
-            //        CustomerNumber = 123,
-            //        Age = 20
-            //    });
+            context.Customers
+                .AddOrUpdate(
+                c => c.FirstName,
+                new Customer
+                {
+                    FirstName = "Pesho",
+                    LastName = "Peshev",
+                    CustomerNumber = 123,
+                    Age = 20
+                });
 
-            //context.Tickets
-            //    .AddOrUpdate(
-            //    t => t.TicketNumber,
-            //    new Ticket
-            //    {
-            //        TicketNumber = 1234,
-            //        TypeClass = TypeClass.Bussiness,
-            //    });
+            context.Tickets
+                .AddOrUpdate(
+                t => t.TicketNumber,
+                new Ticket
+                {
+                    TicketNumber = 1234,
+                    TypeClass = TypeClass.Bussiness,
+                    TypeAircraft = TypeAircraft.Airbus320
+                });
         }
     }
 }

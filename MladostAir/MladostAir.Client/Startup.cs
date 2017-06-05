@@ -22,16 +22,11 @@ namespace MladostAir.Client
             var db = new MladostAirDbContext();
 
 
-
-            //            var json = @"{
-            //    'Name': 'EasyJet',
-            //    'TypeAircraft': 'Boing747'
-            //}";
             var jsonReader = new JsonReportFileReader();
             var json = jsonReader.ReadJsonReports();
             var airline2 = JsonConvert.DeserializeObject<Airline>(json);
 
-            var destination = new Destination
+            var city = new City
             {
                 Name = "Plovdiv",
             };
@@ -49,8 +44,7 @@ namespace MladostAir.Client
 
             var airline = new Airline
             {
-                Name = airline2.Name,
-                TypeAircraft = airline2.TypeAircraft
+                Name = "Bulg"
             };
 
             var customer = new Customer
@@ -65,16 +59,17 @@ namespace MladostAir.Client
             {
                 TicketNumber = 9876,
                 TypeClass = TypeClass.Economy,
-                CustomerId = 2,
-                DestinationId = 2
+                TypeAircraft = TypeAircraft.Airbus319
             };
 
-            db.Destinations.Add(destination);
             db.Countries.Add(country);
+
+            db.Cities.Add(city);
             db.Airports.Add(airport);
-            db.Airlines.Add(airline);
             db.Customers.Add(customer);
             db.Tickets.Add(ticket);
+            db.Airlines.Add(airline);
+
             db.SaveChanges();
 
             //Console.WriteLine(db.Destinations.Count());
