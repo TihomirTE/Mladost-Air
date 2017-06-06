@@ -10,20 +10,20 @@ namespace ExternalFiles.Readers
     {
         private const string JsonDirectory = "../../../../ExternalFiles/JsonReports/dataJson.json";
 
-        public string ReadJsonReports()
+        public IEnumerable<string> ReadJsonReports()
         {
-            //var filesPath = Directory.GetFiles(JsonDirectory);
+            var filesPath = Directory.GetFiles(JsonDirectory);
 
-            //var jsonTexts = filesPath.Select(path => File.ReadAllText(path));
+            var jsonTexts = filesPath.Select(path => File.ReadAllText(path));
 
-            //return jsonTexts;
+            return jsonTexts;
 
-            StreamReader file = File.OpenText(JsonDirectory);
-            JsonTextReader reader = new JsonTextReader(file);
+            //StreamReader file = File.OpenText(JsonDirectory);
+            //JsonTextReader reader = new JsonTextReader(file);
 
-            var json = (JObject)JToken.ReadFrom(reader);
+            //var json = (JObject)JToken.ReadFrom(reader);
 
-            return json.ToString();
+            //return json.ToString();
         }
 
        

@@ -6,6 +6,6 @@ namespace ExternalFiles.Readers.JsonModelReaders
     public class DataArray
     {
         [JsonProperty("data")]
-        public List<TicketJson> Superheroes { get; set; }
+        public IList<JsonTicket> Tickets { get; set; }
     }
 }

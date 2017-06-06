@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JsonModelReaders\DataArray.cs" />
+    <Compile Include="JsonModelReaders\JsonCustomer.cs" />
+    <Compile Include="JsonModelReaders\JsonTicket.cs" />
     <Compile Include="JsonReportFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
