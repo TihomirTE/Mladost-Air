@@ -9,16 +9,16 @@ namespace ExternalFiles.Readers.JsonModelReaders
 {
     public class JsonCustomer
     {
-        [JsonProperty("firstName")]
+        [JsonProperty(PropertyName = "FirstName")]
         public string FirstName { get; set; }
 
-        [JsonProperty("lastName")]
+        [JsonProperty(PropertyName = "LastName")]
         public string LastName { get; set; }
 
-        [JsonProperty("customerNumber")]
+        [JsonProperty(PropertyName = "CustomerNumber")]
         public int CustomerNumber { get; set; }
 
-        [JsonProperty("age")]
+        [JsonProperty(PropertyName = "Age")]
         public int Age { get; set; }
     }
 }

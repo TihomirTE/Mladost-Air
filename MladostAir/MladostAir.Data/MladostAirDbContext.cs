@@ -1,4 +1,5 @@
-﻿using MladostAir.Models;
+﻿using MladostAir.Data.Migrations;
+using MladostAir.Models;
 using System.Data.Entity;
 
 namespace MladostAir.Data
@@ -8,7 +9,7 @@ namespace MladostAir.Data
         public MladostAirDbContext()
             :base("MladostAirDatabase")
         {
-
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<MladostAirDbContext, Configuration>());
         }
 
         public virtual IDbSet<Airline> Airlines { get; set; }

@@ -9,28 +9,25 @@ namespace ExternalFiles.Readers.JsonModelReaders
 {
     public class JsonTicket
     {
-        [JsonProperty("ticketNumber")]
-        public int TicketNumber { get; set; }
+        [JsonProperty(PropertyName = "Destination")]
+        public string Destination { get; set; }
 
-        [JsonProperty("typeClass")]
-        public string TypeClass { get; set; }
+        [JsonProperty(PropertyName = "Price")]
+        public int Price { get; set; }
 
-        [JsonProperty("typeAircraft")]
-        public string TypeAircraft { get; set; }
-
-        [JsonProperty("customer")]
-        public string Customer { get; set; }
-
-        [JsonProperty("airline")]
+        [JsonProperty(PropertyName = "Airline")]
         public string Airline { get; set; }
 
-        [JsonProperty("airport")]
-        public string Airport { get; set; }
-
-        [JsonProperty("city")]
+        [JsonProperty(PropertyName = "City")]
         public string City { get; set; }
 
-        [JsonProperty("country")]
+        [JsonProperty(PropertyName = "Country")]
         public string Country { get; set; }
+
+        [JsonProperty(PropertyName = "Customer")]
+        public JsonCustomer Customer { get; set; }
+
+        [JsonProperty(PropertyName = "Airport")]
+        public JsonAirport Airport { get; set; }
     }
 }

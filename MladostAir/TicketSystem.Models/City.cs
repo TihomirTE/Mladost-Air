@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MladostAir.Models
 {
@@ -24,7 +25,7 @@ namespace MladostAir.Models
             set { this.airports = value; }
         }
 
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
 
         public virtual Country Country { get; set; }
     }

@@ -1,18 +1,43 @@
 {
-    "data": [{
+    //"tickets": [{
 
-        "ticketNumber": 4321,
-        "typeClass": "first",
-        "typeAircraft": "Airbus319",
-        "customer": {
-            "firstName": "Evstati",
-            "lastName": "Stamatov",
-            "customerNumber": 765,
-            "age": 21
-        },
-        "airline": "FranceAir",
-        "airport": "LBBG",
-        "city": "Burgas",
-        "country": "Bulgaria"
-    }]
+    //"Ticket": {
+    "Destination": "London",
+    "Price": 1000,
+    "Airline": "BulgariaAir",
+    "City": "London",
+    "Country": "UK",
+    "Customer": {
+        "FirstName": "John",
+        "LastName": "Brown",
+        "CustomerNumber": 123,
+        "Age": 23
+    },
+    "Airport": {
+        "Name": "HeathrowAirport",
+        "AirportCode": "LHR"
+    }
+    //}
+    //     },
+    //     {
+
+    //         "Ticket": {
+    //             "Customer": {
+    //                 "FirstName": "Pesho",
+    //                 "LastName": "Ludiq",
+    //                 "CustomerNumber": 888,
+    //                 "Age": 31
+    //             },
+    //             "Destination": "Sofia",
+    //             "Price": 100,
+    //             "Airport": {
+    //                 "Name": "SofiaAirport",
+    //                 "AirportCode": "LBSF"
+    //             },
+    //             "Airline": "EasyJet",
+    //             "City": "Sofia",
+    //             "Country": "Bulgaria"
+    //         }
+    //}
+    // }]
 }

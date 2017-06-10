@@ -22,7 +22,7 @@ namespace MladostAir.Models
         [MaxLength(5)]
         public string AirportCode { get; set; }
 
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
 
         public virtual City City { get; set; }
 
