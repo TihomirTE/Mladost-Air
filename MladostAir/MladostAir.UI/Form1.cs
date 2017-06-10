@@ -5,8 +5,10 @@ using System.Data;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MladostAir.Data;
@@ -40,6 +42,8 @@ namespace MladostAir.UI
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the '_Mladost_AirDataSet.Tickets' table. You can move, or remove it, as needed.
+            //this.ticketsTableAdapter.Fill(this._Mladost_AirDataSet.Tickets);
             // TODO: This line of code loads data into the '_Mladost_AirDataSet.Customers' table. You can move, or remove it, as needed.
             // this.customersTableAdapter.Fill(this._Mladost_AirDataSet.Customers);
             try
@@ -76,7 +80,7 @@ namespace MladostAir.UI
             DataRow newRow = ds.Tables[0].NewRow();
             newRow[1] = firstNameTextBox.Text;
             newRow[2] = lastNameTextBox.Text;
-            newRow[3] = customerNumberTextBox.Text;
+            newRow[3] = int.Parse(customerNumberTextBox.Text);
             newRow[4] = int.Parse(ageTextBox.Text);
             ds.Tables[0].Rows.Add(newRow);
             //var db = new MladostAirDbContext();
@@ -108,8 +112,45 @@ namespace MladostAir.UI
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            //TODO ADD VALIDATION
+            int num;
+            if (!isValidInput(firstNameTextBox.Text, firstNameTextBox)
+                || !isValidInput(lastNameTextBox.Text, lastNameTextBox)
+                || !Int32.TryParse(ageTextBox.Text, out num) || !Int32.TryParse(customerNumberTextBox.Text, out num))
+            {
+                return;
+            }
 
+            DataRow row = ds.Tables[0].Rows[inc];
+
+            row[1] = firstNameTextBox.Text;
+            row[2] = lastNameTextBox.Text;
+            row[3] = int.Parse(customerNumberTextBox.Text);
+            row[4] = int.Parse(ageTextBox.Text);
+
+            try
+            {
+                objConnection.UpdateDatabase(ds);
+                BindComboBox();
+                MessageBox.Show("Record updated");
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+
+        private bool isValidInput(string text, TextBox tb)
+        {
+            int number;
+            Regex regex = new Regex(@"[\d]");
+            if (Int32.TryParse(firstNameTextBox.Text, out number) || regex.IsMatch(tb.Text) || tb.Text == "")
+            {
+                MessageBox.Show("Invalid input! Please re-enter.");
+                tb.Text = "";
+                return false;
+            }
+
+            return true;
         }
 
         private void BindComboBox()
@@ -165,6 +206,10 @@ namespace MladostAir.UI
                 inc++;
                 NavigateRecords();
             }
+            else
+            {
+                MessageBox.Show("Last record reached!");
+            }
         }
 
         private void btnPrev_Click(object sender, EventArgs e)
@@ -173,6 +218,10 @@ namespace MladostAir.UI
             {
                 inc--;
                 NavigateRecords();
+            }
+            else
+            {
+                MessageBox.Show("First record reached!");
             }
         }
     }

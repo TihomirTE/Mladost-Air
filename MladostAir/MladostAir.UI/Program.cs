@@ -18,8 +18,6 @@ namespace MladostAir.UI
         [STAThread]
         static void Main()
         {
-            //Console.WriteLine("tuk");
-           // JsonReportFileReader.ReadJsonFile();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

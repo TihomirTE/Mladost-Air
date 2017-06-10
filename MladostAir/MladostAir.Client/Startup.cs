@@ -17,7 +17,6 @@ namespace MladostAir.Client
     {
         public static void Main()
         {
-
             JsonReportFileReader.ReadJsonFile();
 
             //var db = new MladostAirDbContext();
