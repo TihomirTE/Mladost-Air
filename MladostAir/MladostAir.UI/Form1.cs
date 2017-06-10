@@ -30,8 +30,8 @@ namespace MladostAir.UI
         private DataSet ds;
         private DataRow dRow;
         private int MaxRows;
-        private int inc = 0;
-        private int reportClicks = 0;
+        private int inc;
+        private int reportClicks;
 
         public Form1()
         {
@@ -77,6 +77,8 @@ namespace MladostAir.UI
             lastNameTextBox.Text = dRow.ItemArray.GetValue(2).ToString();
             customerNumberTextBox.Text = dRow.ItemArray.GetValue(3).ToString();
             ageTextBox.Text = dRow.ItemArray.GetValue(4).ToString();
+            //comboBox1.SelectedIndex = inc;
+            UpdateLabel();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -115,7 +117,8 @@ namespace MladostAir.UI
             int num;
             if (!IsValidInput(firstNameTextBox.Text, firstNameTextBox)
                 || !IsValidInput(lastNameTextBox.Text, lastNameTextBox)
-                || !Int32.TryParse(ageTextBox.Text, out num) || !Int32.TryParse(customerNumberTextBox.Text, out num))
+                || !Int32.TryParse(ageTextBox.Text, out num) || !Int32.TryParse(customerNumberTextBox.Text, out num)
+                || int.Parse(ageTextBox.Text) < 0 || int.Parse(ageTextBox.Text) > 170 || int.Parse(customerNumberTextBox.Text) < 0)
             {
                 return;
             }
@@ -156,15 +159,15 @@ namespace MladostAir.UI
         private void BindComboBox()
         {
             SqlConnection conn = new SqlConnection(@"Data Source=.;Initial Catalog=Mladost-Air;Integrated Security=True");
-            SqlCommand sc = new SqlCommand("select * from customers", conn);
-            SqlDataReader reader;
             conn.Open();
-            reader = sc.ExecuteReader();
+           
+            SqlCommand sc = new SqlCommand("select * from customers", conn);
+            SqlDataReader reader = sc.ExecuteReader();
+
             DataTable dt = new DataTable();
-            dt.Columns.Add("id", typeof(string));
+            dt.Columns.Add("id", typeof(int));
             dt.Load(reader);
 
-            //comboBox1.ValueMember = "name";
             comboBox1.DisplayMember = "id";
             comboBox1.DataSource = dt;
 
@@ -229,7 +232,7 @@ namespace MladostAir.UI
         {
             PdfPTable pdfTable = new PdfPTable(ds.Tables[0].Columns.Count);
 
-            FileStream fs = new FileStream("../../../ExcursionsReport" + reportClicks + ".pdf",
+            FileStream fs = new FileStream("../../../CustomersReport" + reportClicks + ".pdf",
                 FileMode.Create, FileAccess.Write, FileShare.None);
 
             foreach (DataColumn column in ds.Tables[0].Columns)
@@ -263,7 +266,11 @@ namespace MladostAir.UI
             {
                 MessageBox.Show(err.Message);
             }
+        }
 
+        private void UpdateLabel()
+        {
+            recordLabel.Text = "RECORD " + (inc + 1) + " OUT OF " + MaxRows;
         }
     }
 }
