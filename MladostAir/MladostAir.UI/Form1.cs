@@ -8,17 +8,31 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.text.html.simpleparser;
 using MladostAir.Data;
 using MladostAir.Models;
 using MladostAir.Run;
+using System.Web;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace MladostAir.UI
 {
     public partial class Form1 : Form
     {
+        private DatabaseConnection objConnection;
+        private string conString;
+        private DataSet ds;
+        private DataRow dRow;
+        private int MaxRows;
+        private int inc = 0;
+        private int reportClicks = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -30,15 +44,6 @@ namespace MladostAir.UI
             this.customersBindingSource.EndEdit();
             this.tableAdapterManager.UpdateAll(this._Mladost_AirDataSet);
         }
-
-        DatabaseConnection objConnection;
-        string conString;
-
-        DataSet ds;
-        DataRow dRow;
-
-        int MaxRows;
-        int inc = 0;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -76,26 +81,21 @@ namespace MladostAir.UI
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //TODO ADD VALIDATION
+            int num;
+            if (!IsValidInput(firstNameTextBox.Text, firstNameTextBox)
+                || !IsValidInput(lastNameTextBox.Text, lastNameTextBox)
+                || !Int32.TryParse(ageTextBox.Text, out num) || !Int32.TryParse(customerNumberTextBox.Text, out num))
+            {
+                return;
+            }
+
             DataRow newRow = ds.Tables[0].NewRow();
             newRow[1] = firstNameTextBox.Text;
             newRow[2] = lastNameTextBox.Text;
             newRow[3] = int.Parse(customerNumberTextBox.Text);
             newRow[4] = int.Parse(ageTextBox.Text);
             ds.Tables[0].Rows.Add(newRow);
-            //var db = new MladostAirDbContext();
-            //var customer = new Customer
-            //{
-            //    FirstName = firstNameTextBox.Text,
-            //    LastName = lastNameTextBox.Text,
-            //    CustomerNumber = int.Parse(customerNumberTextBox.Text),
-            //    Age = int.Parse(ageTextBox.Text),
-            //};
 
-            //db.Customers.Add(customer);
-            //db.SaveChanges();
-
-            // MessageBox.Show("Database Updated");
             try
             {
                 objConnection.UpdateDatabase(ds);
@@ -113,8 +113,8 @@ namespace MladostAir.UI
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             int num;
-            if (!isValidInput(firstNameTextBox.Text, firstNameTextBox)
-                || !isValidInput(lastNameTextBox.Text, lastNameTextBox)
+            if (!IsValidInput(firstNameTextBox.Text, firstNameTextBox)
+                || !IsValidInput(lastNameTextBox.Text, lastNameTextBox)
                 || !Int32.TryParse(ageTextBox.Text, out num) || !Int32.TryParse(customerNumberTextBox.Text, out num))
             {
                 return;
@@ -139,7 +139,7 @@ namespace MladostAir.UI
             }
         }
 
-        private bool isValidInput(string text, TextBox tb)
+        private bool IsValidInput(string text, TextBox tb)
         {
             int number;
             Regex regex = new Regex(@"[\d]");
@@ -223,6 +223,47 @@ namespace MladostAir.UI
             {
                 MessageBox.Show("First record reached!");
             }
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            PdfPTable pdfTable = new PdfPTable(ds.Tables[0].Columns.Count);
+
+            FileStream fs = new FileStream("../../../ExcursionsReport" + reportClicks + ".pdf",
+                FileMode.Create, FileAccess.Write, FileShare.None);
+
+            foreach (DataColumn column in ds.Tables[0].Columns)
+            {
+                var pdfCell = new PdfPCell(new Phrase(column.Caption));
+                pdfTable.AddCell(pdfCell);
+            }
+
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                foreach (var col in row.ItemArray)
+                {
+                    var pdfCell = new PdfPCell(new Phrase(col.ToString()));
+                    pdfTable.AddCell(pdfCell);
+                }
+            }
+
+            try
+            {
+                Document pdfDocument = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+                PdfWriter.GetInstance(pdfDocument, fs);
+
+                pdfDocument.Open();
+                pdfDocument.Add(pdfTable);
+                pdfDocument.Close();
+
+                MessageBox.Show("PDF created successfully!");
+                reportClicks++;
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+
         }
     }
 }

@@ -48,10 +48,11 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnPrev = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             firstNameLabel = new System.Windows.Forms.Label();
             lastNameLabel = new System.Windows.Forms.Label();
             customerNumberLabel = new System.Windows.Forms.Label();
@@ -216,14 +217,15 @@
             this.label2.TabIndex = 16;
             this.label2.Text = "Edit Existing Record";
             // 
-            // button1
+            // btnExport
             // 
-            this.button1.Location = new System.Drawing.Point(732, 316);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(144, 31);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "EXPORT TO PDF";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnExport.Location = new System.Drawing.Point(732, 316);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(144, 31);
+            this.btnExport.TabIndex = 17;
+            this.btnExport.Text = "EXPORT TO PDF";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // comboBox1
             // 
@@ -254,15 +256,25 @@
             this.btnPrev.UseVisualStyleBackColor = true;
             this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(716, 39);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(212, 17);
+            this.label3.TabIndex = 21;
+            this.label3.Text = "VIEW AND SELECT ALL USERS";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1025, 421);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnPrev);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnDelete);
@@ -278,7 +290,7 @@
             this.Controls.Add(ageLabel);
             this.Controls.Add(this.ageTextBox);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Mladost Air";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this._Mladost_AirDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.customersBindingSource)).EndInit();
@@ -304,10 +316,11 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnPrev;
+        private System.Windows.Forms.Label label3;
     }
 }
 
