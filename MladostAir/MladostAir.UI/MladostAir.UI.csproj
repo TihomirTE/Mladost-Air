@@ -107,6 +107,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExternalFiles.Readers\ExternalFiles.Readers.csproj">
+      <Project>{e88be8f6-77c8-469a-a7b8-e94cbe121d76}</Project>
+      <Name>ExternalFiles.Readers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MladostAir.Data\MladostAir.Data.csproj">
       <Project>{85a47643-4c5c-4110-9bb8-08e2a5caf469}</Project>
       <Name>MladostAir.Data</Name>
