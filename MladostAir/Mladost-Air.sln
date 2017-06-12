@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalFiles.Readers", "Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MladostAir.UI", "MladostAir.UI\MladostAir.UI.csproj", "{B2D6164C-6756-4D34-98B5-806DAFEA14BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MladostAir.SQLite", "MladostAir.SqlLite\MladostAir.SQLite.csproj", "{48896447-7664-4027-9949-1A4E33C0B38B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B2D6164C-6756-4D34-98B5-806DAFEA14BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2D6164C-6756-4D34-98B5-806DAFEA14BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2D6164C-6756-4D34-98B5-806DAFEA14BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48896447-7664-4027-9949-1A4E33C0B38B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48896447-7664-4027-9949-1A4E33C0B38B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48896447-7664-4027-9949-1A4E33C0B38B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48896447-7664-4027-9949-1A4E33C0B38B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
