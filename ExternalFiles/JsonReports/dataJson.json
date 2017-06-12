@@ -1,43 +1,95 @@
-{
-    //"tickets": [{
 
-    //"Ticket": {
+[
+  {
     "Destination": "London",
     "Price": 1000,
     "Airline": "BulgariaAir",
     "City": "London",
     "Country": "UK",
     "Customer": {
-        "FirstName": "John",
-        "LastName": "Brown",
-        "CustomerNumber": 123,
-        "Age": 23
+      "FirstName": "John",
+      "LastName": "Brown",
+      "CustomerNumber": 123,
+      "Age": 23
     },
     "Airport": {
-        "Name": "HeathrowAirport",
-        "AirportCode": "LHR"
+      "Name": "HeathrowAirport",
+      "AirportCode": "LHR"
     }
-    //}
-    //     },
-    //     {
+  },
 
-    //         "Ticket": {
-    //             "Customer": {
-    //                 "FirstName": "Pesho",
-    //                 "LastName": "Ludiq",
-    //                 "CustomerNumber": 888,
-    //                 "Age": 31
-    //             },
-    //             "Destination": "Sofia",
-    //             "Price": 100,
-    //             "Airport": {
-    //                 "Name": "SofiaAirport",
-    //                 "AirportCode": "LBSF"
-    //             },
-    //             "Airline": "EasyJet",
-    //             "City": "Sofia",
-    //             "Country": "Bulgaria"
-    //         }
-    //}
-    // }]
-}
+  {
+
+    "Customer": {
+      "FirstName": "Pesho",
+      "LastName": "Ludiq",
+      "CustomerNumber": 888,
+      "Age": 31
+    },
+    "Destination": "Sofia",
+    "Price": 100,
+    "Airport": {
+      "Name": "SofiaAirport",
+      "AirportCode": "LBSF"
+    },
+    "Airline": "EasyJet",
+    "City": "Sofia",
+    "Country": "Bulgaria"
+  },
+
+  {
+
+    "Customer": {
+      "FirstName": "Joro",
+      "LastName": "Batkata",
+      "CustomerNumber": 42069,
+      "Age": 19
+    },
+    "Destination": "LA",
+    "Price": 350,
+    "Airport": {
+      "Name": "SofiaAirport",
+      "AirportCode": "LBSF"
+    },
+    "Airline": "VictoriaAir",
+    "City": "Sofia",
+    "Country": "Bulgaria"
+  },
+
+  {
+
+    "Customer": {
+      "FirstName": "JaSON",
+      "LastName": "Smith",
+      "CustomerNumber": 777,
+      "Age": 31
+    },
+    "Destination": "Sofia",
+    "Price": 220,
+    "Airport": {
+      "Name": "EdinburghAirport",
+      "AirportCode": "EGPH"
+    },
+    "Airline": "ScottishAir",
+    "City": "Edinburgh",
+    "Country": "Scotland"
+  },
+   {
+
+            "Customer": {
+                "FirstName": "Ivan",
+                "LastName": "Georgiev",
+                "CustomerNumber": 8,
+                "Age": 21
+                },
+                "Destination": "Miami",
+                "Price": 450,
+                "Airport": {
+                    "Name": "SofiaAirport",
+                    "AirportCode": "LBSF"
+                },
+                "Airline": "RyanAir",
+                "City": "Sofia",
+                "Country": "Bulgaria"           
+      }
+]

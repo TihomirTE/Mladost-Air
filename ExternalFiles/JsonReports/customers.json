@@ -1,0 +1,32 @@
+[
+  {
+    "FirstName": "John",
+    "LastName": "Brown",
+    "CustomerNumber": 123,
+    "Age": 23
+  },
+  {
+    "FirstName": "Pesho",
+    "LastName": "Ludiq",
+    "CustomerNumber": 888,
+    "Age": 31
+  },
+  {
+    "FirstName": "Joro",
+    "LastName": "Batkata",
+    "CustomerNumber": 42069,
+    "Age": 19
+  },
+  {
+    "FirstName": "JaSON",
+    "LastName": "Smith",
+    "CustomerNumber": 777,
+    "Age": 31
+  },
+  {
+    "FirstName": "Ivan",
+    "LastName": "Georgiev",
+    "CustomerNumber": 8,
+    "Age": 21
+  }
+]

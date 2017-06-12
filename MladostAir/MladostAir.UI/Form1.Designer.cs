@@ -56,6 +56,7 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.recordLabel = new System.Windows.Forms.Label();
+            this.btnPopulate = new System.Windows.Forms.Button();
             firstNameLabel = new System.Windows.Forms.Label();
             lastNameLabel = new System.Windows.Forms.Label();
             customerNumberLabel = new System.Windows.Forms.Label();
@@ -173,6 +174,7 @@
             this.btnAddCustomer.TabIndex = 11;
             this.btnAddCustomer.Text = "ADD CUSTOMER";
             this.btnAddCustomer.UseVisualStyleBackColor = true;
+            this.btnAddCustomer.Click += new System.EventHandler(this.btnAddCustomer_Click);
             // 
             // btnSave
             // 
@@ -224,7 +226,7 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(732, 316);
+            this.btnExport.Location = new System.Drawing.Point(732, 309);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(144, 31);
             this.btnExport.TabIndex = 17;
@@ -266,16 +268,16 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(716, 39);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(212, 17);
+            this.label3.Size = new System.Drawing.Size(85, 17);
             this.label3.TabIndex = 21;
-            this.label3.Text = "VIEW AND SELECT ALL USERS";
+            this.label3.Text = "Customer ID";
             // 
             // pictureBox3
             // 
             this.pictureBox3.Image = global::MladostAir.UI.Properties.Resources.plane;
             this.pictureBox3.Location = new System.Drawing.Point(405, 233);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(302, 176);
+            this.pictureBox3.Size = new System.Drawing.Size(321, 176);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox3.TabIndex = 24;
             this.pictureBox3.TabStop = false;
@@ -283,7 +285,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::MladostAir.UI.Properties.Resources.earth_air_plane_01;
-            this.pictureBox1.Location = new System.Drawing.Point(274, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(295, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(393, 173);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -299,12 +301,23 @@
             this.recordLabel.TabIndex = 25;
             this.recordLabel.Text = "label4";
             // 
+            // btnPopulate
+            // 
+            this.btnPopulate.Location = new System.Drawing.Point(732, 195);
+            this.btnPopulate.Name = "btnPopulate";
+            this.btnPopulate.Size = new System.Drawing.Size(144, 31);
+            this.btnPopulate.TabIndex = 26;
+            this.btnPopulate.Text = "POPULATE DB";
+            this.btnPopulate.UseVisualStyleBackColor = true;
+            this.btnPopulate.Click += new System.EventHandler(this.btnPopulate_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(1025, 421);
+            this.Controls.Add(this.btnPopulate);
             this.Controls.Add(this.recordLabel);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox1);
@@ -364,6 +377,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label recordLabel;
+        private System.Windows.Forms.Button btnPopulate;
     }
 }
 

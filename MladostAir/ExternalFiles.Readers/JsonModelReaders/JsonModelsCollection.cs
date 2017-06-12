@@ -11,7 +11,7 @@ namespace ExternalFiles.Readers.JsonModelReaders
     public class JsonModelsCollection
     {
         [JsonProperty("Ticket")]
-        public DbSet<JsonTicket> Tickets { get; set; }
+        public List<JsonTicket> Tickets { get; set; }
 
         //public IEnumerable<JsonAirport> Airports { get; set; }
 

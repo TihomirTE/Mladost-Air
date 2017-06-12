@@ -1,70 +1,69 @@
 ﻿using ExternalFiles.Readers.JsonModelReaders;
 using MladostAir.Data;
-using System.Data.Entity;
 using MladostAir.Models;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.IO;
-using System.Linq;
-using MladostAir.Models.Enum;
 
 namespace ExternalFiles.Readers
 {
     public class JsonReportFileReader
     {
         private const string JsonDirectory = "../../../../ExternalFiles/JsonReports/dataJson.json";
+        private const string CountriesJson = "../../../../ExternalFiles/JsonReports/countries.json";
+        private const string CitiesJson = "../../../../ExternalFiles/JsonReports/cities.json";
 
         public static void ReadJsonFile()
         {
-            string jsonFile = File.ReadAllText(JsonDirectory);
-
-            var jsonModels = JsonConvert.DeserializeObject<JsonTicket>(jsonFile);
-            var customerModel = jsonModels.Customer;
-            var destination = jsonModels.Destination;
-            var price = jsonModels.Price;
-            var airportModel = jsonModels.Airport;
-            var cityModel = jsonModels.City;
-            var countryModel = jsonModels.Country;
-            var airlineModel = jsonModels.Airline;
-
             var database = new MladostAirDbContext();
 
-            var airline = new Airline();
-            var airport = new Airport();
-            var city = new City();
-            var country = new Country();
-            var customer = new Customer();
-            var ticket = new Ticket();
+            string citiesJson = File.ReadAllText(CitiesJson);
+            var cities = JsonConvert.DeserializeObject<List<City>>(citiesJson);
 
-            // import customer
-            customer.FirstName = customerModel.FirstName;
-            customer.LastName = customerModel.LastName;
-            customer.CustomerNumber = customerModel.CustomerNumber;
-            customer.Age = customerModel.Age;
-            database.Customers.Add(customer);
+            foreach (var city in cities)
+            {
+                database.Cities.AddOrUpdate(city);
+            }
 
-            //// import airport
-            airport.Name = airportModel.Name;
-            airport.AirportCode = airportModel.AirportCode;
-            database.Airports.Add(airport);
+            string countriesJson = File.ReadAllText(CountriesJson);
+            var countries = JsonConvert.DeserializeObject<List<Country>>(countriesJson);
 
-            //// import airiline
-            airline.Name = airlineModel;
+            foreach (var country in countries)
+            {
+                database.Countries.AddOrUpdate(country);
+            }
 
-            //// import ticket
-            ticket.Destination = destination;
-            ticket.Price = price;
-            database.Tickets.Add(ticket);
+            string jsonFile = File.ReadAllText(JsonDirectory);
+            var tickets = JsonConvert.DeserializeObject<List<JsonTicket>>(jsonFile);
 
-            //// import city
-            city.Name = cityModel;
-            database.Cities.Add(city);
+            foreach (var ticket in tickets)
+            {
+                var currTicket = new Ticket
+                {
+                    Destination = ticket.Destination,
+                    Price = ticket.Price,
+                    Airline = new Airline
+                    {
+                        Name = ticket.Airline
+                    },
+                    Airport = new Airport
+                    {
+                        Name = ticket.Airport.Name,
+                        AirportCode = ticket.Airport.AirportCode
+                    },
+                    Customer = new Customer
+                    {
+                        FirstName = ticket.Customer.FirstName,
+                        LastName = ticket.Customer.LastName,
+                        Age = ticket.Customer.Age,
+                        CustomerNumber = ticket.Customer.CustomerNumber
+                    },
+                };
 
-            //// import country
-            country.Name = countryModel;
-            database.Countries.Add(country);
+                database.Tickets.Add(currTicket);
+            }
+
             database.SaveChanges();
         }
     }

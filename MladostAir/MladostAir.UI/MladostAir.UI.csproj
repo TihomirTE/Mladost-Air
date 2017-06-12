@@ -59,7 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connection.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,7 +120,7 @@
       <Name>MladostAir.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\TicketSystem.Models\MladostAir.Models.csproj">
-      <Project>{ADB39492-3D46-4AAE-B9A7-F3520ABAE5A3}</Project>
+      <Project>{adb39492-3d46-4aae-b9a7-f3520abae5a3}</Project>
       <Name>MladostAir.Models</Name>
     </ProjectReference>
   </ItemGroup>

@@ -7,7 +7,7 @@ namespace MladostAir.Data
     public class MladostAirDbContext : DbContext
     {
         public MladostAirDbContext()
-            :base("MladostAirDatabase")
+            :base("name=MladostAirDatabase")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<MladostAirDbContext, Configuration>());
         }

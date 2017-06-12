@@ -1,41 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using iTextSharp.text.html.simpleparser;
 using MladostAir.Data;
 using MladostAir.Models;
-using MladostAir.Run;
-using System.Web;
-using Org.BouncyCastle.Asn1.Ocsp;
+using ExternalFiles.Readers;
 
 namespace MladostAir.UI
 {
     public partial class Form1 : Form
     {
-        private DatabaseConnection objConnection;
-        private string conString;
-        private DataSet ds;
-        private DataRow dRow;
-        private int MaxRows;
+        private int maxRows;
         private int inc;
         private int reportClicks;
+
+        private readonly MladostAirDbContext dbContext = new MladostAirDbContext();
+        private readonly List<Customer> customersList;
 
         public Form1()
         {
             InitializeComponent();
+            customersList = dbContext.Customers.ToList();
         }
 
         private void customersBindingNavigatorSaveItem_Click(object sender, EventArgs e)
@@ -51,19 +45,15 @@ namespace MladostAir.UI
             //this.ticketsTableAdapter.Fill(this._Mladost_AirDataSet.Tickets);
             // TODO: This line of code loads data into the '_Mladost_AirDataSet.Customers' table. You can move, or remove it, as needed.
             // this.customersTableAdapter.Fill(this._Mladost_AirDataSet.Customers);
+
+            this.BackColor = Color.FromArgb(204, 224, 180);
+         
             try
             {
-                objConnection = new DatabaseConnection();
-                conString = Properties.Settings.Default.Mladost_AirConnectionString;
-                objConnection.connection_string = conString;
-                objConnection.Sql = Properties.Settings.Default.SQL;
-                ds = objConnection.GetConnection;
-                MaxRows = ds.Tables[0].Rows.Count;
-
-                NavigateRecords();
+                maxRows = dbContext.Customers.Count();
                 BindComboBox();
+                NavigateRecords();
             }
-
             catch (Exception err)
             {
                 MessageBox.Show(err.Message);
@@ -72,12 +62,11 @@ namespace MladostAir.UI
 
         private void NavigateRecords()
         {
-            dRow = ds.Tables[0].Rows[inc];
-            firstNameTextBox.Text = dRow.ItemArray.GetValue(1).ToString();
-            lastNameTextBox.Text = dRow.ItemArray.GetValue(2).ToString();
-            customerNumberTextBox.Text = dRow.ItemArray.GetValue(3).ToString();
-            ageTextBox.Text = dRow.ItemArray.GetValue(4).ToString();
-            //comboBox1.SelectedIndex = inc;
+            comboBox1.SelectedIndex = inc;
+            firstNameTextBox.Text = customersList[inc].FirstName;
+            lastNameTextBox.Text = customersList[inc].LastName;
+            customerNumberTextBox.Text = customersList[inc].CustomerNumber.ToString();
+            ageTextBox.Text = customersList[inc].Age.ToString();
             UpdateLabel();
         }
 
@@ -86,30 +75,27 @@ namespace MladostAir.UI
             int num;
             if (!IsValidInput(firstNameTextBox.Text, firstNameTextBox)
                 || !IsValidInput(lastNameTextBox.Text, lastNameTextBox)
-                || !Int32.TryParse(ageTextBox.Text, out num) || !Int32.TryParse(customerNumberTextBox.Text, out num))
+                || !int.TryParse(ageTextBox.Text, out num) || !int.TryParse(customerNumberTextBox.Text, out num))
             {
                 return;
             }
 
-            DataRow newRow = ds.Tables[0].NewRow();
-            newRow[1] = firstNameTextBox.Text;
-            newRow[2] = lastNameTextBox.Text;
-            newRow[3] = int.Parse(customerNumberTextBox.Text);
-            newRow[4] = int.Parse(ageTextBox.Text);
-            ds.Tables[0].Rows.Add(newRow);
+            var customer = new Customer
+            {
+                FirstName = firstNameTextBox.Text,
+                LastName = lastNameTextBox.Text,
+                Age = int.Parse(ageTextBox.Text),
+                CustomerNumber = int.Parse(customerNumberTextBox.Text)
+            };
 
-            try
-            {
-                objConnection.UpdateDatabase(ds);
-                BindComboBox();
-                MaxRows += 1;
-                inc = MaxRows - 1;
-                MessageBox.Show("Database Updated");
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-            }
+            customersList.Add(customer);
+            dbContext.Customers.Add(customer);
+            dbContext.SaveChanges();
+
+            maxRows++;
+            BindComboBox();
+
+            MessageBox.Show("Record saved!");
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -123,23 +109,19 @@ namespace MladostAir.UI
                 return;
             }
 
-            DataRow row = ds.Tables[0].Rows[inc];
+            var id = comboBox1.Text;
+            var customer = dbContext.Customers.First(c => c.Id.ToString() == id);
+            customersList.Remove(customer);
 
-            row[1] = firstNameTextBox.Text;
-            row[2] = lastNameTextBox.Text;
-            row[3] = int.Parse(customerNumberTextBox.Text);
-            row[4] = int.Parse(ageTextBox.Text);
+            customer.FirstName = firstNameTextBox.Text;
+            customer.LastName = lastNameTextBox.Text;
+            customer.Age = int.Parse(ageTextBox.Text);
+            customer.CustomerNumber = int.Parse(customerNumberTextBox.Text);
 
-            try
-            {
-                objConnection.UpdateDatabase(ds);
-                BindComboBox();
-                MessageBox.Show("Record updated");
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message);
-            }
+            dbContext.Customers.AddOrUpdate(customer);
+            customersList.Add(customer);
+            dbContext.SaveChanges();
+            MessageBox.Show("Record updated!");
         }
 
         private bool IsValidInput(string text, TextBox tb)
@@ -165,7 +147,7 @@ namespace MladostAir.UI
             SqlDataReader reader = sc.ExecuteReader();
 
             DataTable dt = new DataTable();
-            dt.Columns.Add("id", typeof(int));
+            dt.Columns.Add("id", typeof(string));
             dt.Load(reader);
 
             comboBox1.DisplayMember = "id";
@@ -176,22 +158,24 @@ namespace MladostAir.UI
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            try
-            {
-                ds.Tables[0].Rows[inc].Delete();
-                objConnection.UpdateDatabase(ds);
-                BindComboBox();
+            var customer = dbContext.Customers.FirstOrDefault(c => c.FirstName == firstNameTextBox.Text &&
+                                                                   c.LastName == lastNameTextBox.Text &&
+                                                                   c.Age.ToString() == ageTextBox.Text &&
+                                                                   c.CustomerNumber.ToString() ==
+                                                                   customerNumberTextBox.Text);
+            dbContext.Entry(customer).State = EntityState.Deleted;
+            MessageBox.Show("Record deleted!");
+            dbContext.SaveChanges();
 
-                if (inc != 0)
-                {
-                    inc--;
-                }
+            customersList.Remove(customer);
 
-                MessageBox.Show("Record deleted!");
-            }
-            catch (Exception err)
+            BindComboBox();
+            maxRows = customersList.Count;
+            NavigateRecords();
+
+            if (inc != 0)
             {
-                MessageBox.Show(err.Message);
+                inc--;
             }
         }
 
@@ -204,7 +188,7 @@ namespace MladostAir.UI
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (inc != MaxRows - 1)
+            if (inc != maxRows - 1)
             {
                 inc++;
                 NavigateRecords();
@@ -230,24 +214,45 @@ namespace MladostAir.UI
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            PdfPTable pdfTable = new PdfPTable(ds.Tables[0].Columns.Count);
+            PdfPTable pdfTable = new PdfPTable(5);
 
             FileStream fs = new FileStream("../../../CustomersReport" + reportClicks + ".pdf",
                 FileMode.Create, FileAccess.Write, FileShare.None);
 
-            foreach (DataColumn column in ds.Tables[0].Columns)
-            {
-                var pdfCell = new PdfPCell(new Phrase(column.Caption));
-                pdfTable.AddCell(pdfCell);
-            }
+            var idHeader = new PdfPCell(new Phrase("Id"));
+            idHeader.BackgroundColor = BaseColor.GRAY;
 
-            foreach (DataRow row in ds.Tables[0].Rows)
+            var firstNameHeader = new PdfPCell(new Phrase("First Name"));
+            firstNameHeader.BackgroundColor = BaseColor.GRAY;
+
+            var lastNameHeader = new PdfPCell(new Phrase("Last Name"));
+            lastNameHeader.BackgroundColor = BaseColor.GRAY;
+
+            var custNumberHeader = new PdfPCell(new Phrase("Customer Number"));
+            custNumberHeader.BackgroundColor = BaseColor.GRAY;
+
+            var ageHeader = new PdfPCell(new Phrase("Age"));
+            ageHeader.BackgroundColor = BaseColor.GRAY;
+
+            pdfTable.AddCell(idHeader);
+            pdfTable.AddCell(firstNameHeader);
+            pdfTable.AddCell(lastNameHeader);
+            pdfTable.AddCell(custNumberHeader);
+            pdfTable.AddCell(ageHeader);
+
+            foreach (var customer in dbContext.Customers)
             {
-                foreach (var col in row.ItemArray)
-                {
-                    var pdfCell = new PdfPCell(new Phrase(col.ToString()));
-                    pdfTable.AddCell(pdfCell);
-                }
+                var idCell = new PdfPCell(new Phrase(customer.Id.ToString()));
+                var fNameCell = new PdfPCell(new Phrase(customer.FirstName));
+                var lNameCell = new PdfPCell(new Phrase(customer.LastName));
+                var custNumberCell = new PdfPCell(new Phrase(customer.CustomerNumber.ToString()));
+                var ageCell = new PdfPCell(new Phrase(customer.Age.ToString()));
+
+                pdfTable.AddCell(idCell);
+                pdfTable.AddCell(fNameCell);
+                pdfTable.AddCell(lNameCell);
+                pdfTable.AddCell(custNumberCell);
+                pdfTable.AddCell(ageCell);
             }
 
             try
@@ -270,7 +275,22 @@ namespace MladostAir.UI
 
         private void UpdateLabel()
         {
-            recordLabel.Text = "RECORD " + (inc + 1) + " OUT OF " + MaxRows;
+            recordLabel.Text = "RECORD " + (inc + 1) + " OUT OF " + maxRows;
+        }
+
+        private void btnAddCustomer_Click(object sender, EventArgs e)
+        {
+            firstNameTextBox.Clear();
+            lastNameTextBox.Clear();
+            ageTextBox.Clear();
+            customerNumberTextBox.Clear();
+        }
+
+        private void btnPopulate_Click(object sender, EventArgs e)
+        {
+            JsonReportFileReader.ReadJsonFile();
+            MessageBox.Show("Database populated successfully!");
+            btnPopulate.Enabled = false;
         }
     }
 }
