@@ -1,14 +1,14 @@
 # Mladost Air - Team Pretzel
 ----------
 
-##Team members:
+## Team members:
 
 - Георги Къров - Joro97
 - Тихомир Теофилов - TihomirTE
 
 
-##Project desctiption:
-![](/Images/ProjectScheme.png)
+## Project desctiption:
+![](https://github.com/TihomirTE/Team-Pretzel/blob/master/Images/ProjectSheme.png)
 
 MladostAir Database System is a project for creating Airline databases schemes and reports implemented by:
 
